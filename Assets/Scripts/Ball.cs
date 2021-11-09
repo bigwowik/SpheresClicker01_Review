@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float speed = 1f;
-    public int score = 1;
-    public int damage = 1;
-    public Color mainColor = Color.white;
+    private float speed = 1f;
+    private int score = 1;
+    private int damage = 1;
+    public Color mainColor { get; private set; }
 
-    public float limitY;
+    private float limitY;
 
-    private void Awake()
-    {
-        mainColor = Random.ColorHSV();
-        GetComponent<SpriteRenderer>().color = mainColor;
-
-
-    }
 
     private void Update()
     {
@@ -25,16 +18,28 @@ public class Ball : MonoBehaviour
 
         if(transform.position.y <= limitY)
         {
-            Score.Instance.TakeDamage(damage);
+            ScoreManager.Instance.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
 
     public void UpScore()
     {
-        Score.Instance.UpScore(score);
+        ScoreManager.Instance.UpScore(score);
     }
 
+    public void SetValues(float speed, int score, int damage, Color mainColor, float limitY)
+    {
+        this.speed = speed;
+        this.score = score;
+        this.damage = damage;
+        this.mainColor = mainColor;
+        this.limitY = limitY;
 
-
+        GetComponent<SpriteRenderer>().color = mainColor;
+    }
 }
+
+
+
+
